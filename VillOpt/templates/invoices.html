@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Invoices</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f6f8;
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px 24px 24px;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3a4b;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+        a {
+            color: #4B8BBE;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: block;
+            margin-top: 18px;
+            color: #4B8BBE;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .clear-btn {
+            display: block;
+            margin: 0 auto 24px auto;
+            background: #d32f2f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .clear-btn:hover {
+            background: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generated Invoices</h1>
+        <form method="post" action="{{ url_for('clear_invoices') }}" onsubmit="return confirm('Are you sure you want to delete all invoices?');">
+            <button class="clear-btn" type="submit">Clear All Invoices</button>
+        </form>
+        <ul>
+        {% for file in files %}
+            <li><a href="{{ url_for('download_invoice', filename=file) }}">{{ file }}</a></li>
+        {% endfor %}
+        </ul>
+        <a class="back-link" href="/">Back to upload</a>
+    </div>
+</body>
+</html> 
