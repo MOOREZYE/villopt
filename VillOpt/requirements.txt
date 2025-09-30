@@ -1,6 +1,0 @@
-Flask
-pandas
-Jinja2
-reportlab
-openpyxl 
-gunicorn
