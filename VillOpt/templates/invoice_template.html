@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice {{ invoice_number }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .header { font-size: 24px; font-weight: bold; }
+        .section { margin-top: 20px; }
+        .label { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">Invoice #{{ invoice_number }}</div>
+    <div class="section">
+        <span class="label">Address:</span> {{ address }}
+    </div>
+    <div class="section">
+        <span class="label">Product:</span> {{ product }}
+    </div>
+    <div class="section">
+        <span class="label">Amount:</span> ${{ amount }}
+    </div>
+</body>
+</html> 

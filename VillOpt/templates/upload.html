@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Invoices XLSX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f6f8;
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px 24px 24px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3a4b;
+            margin-bottom: 16px;
+        }
+        .drag-area {
+            border: 2px dashed #4B8BBE;
+            border-radius: 12px;
+            padding: 32px 0;
+            background: #f8fafc;
+            color: #4B8BBE;
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .drag-area.dragover {
+            background: #e3f0fc;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .btn {
+            background: #4B8BBE;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #3572a5;
+        }
+        .messages {
+            margin-bottom: 16px;
+            color: #d32f2f;
+        }
+        .invoices-link {
+            display: block;
+            margin-top: 18px;
+            color: #4B8BBE;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .invoices-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Invoices</h1>
+        <p style="color:#555; margin-bottom:24px;">Upload your Excel file to generate invoice PDFs.</p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="messages">
+            {% for message in messages %}
+              <div>{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+            <label class="drag-area" id="dragArea">
+                <span id="dragText">Drag & drop your .xlsx file here or click to select</span>
+                <input type="file" name="file" id="fileInput" accept=".xlsx">
+            </label>
+            <button class="btn" type="submit">Upload</button>
+        </form>
+        <a class="invoices-link" href="{{ url_for('list_invoices') }}">View Generated Invoices</a>
+    </div>
+    <script>
+        const dragArea = document.getElementById('dragArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+        dragArea.addEventListener('click', () => fileInput.click());
+        dragArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dragArea.classList.add('dragover');
+        });
+        dragArea.addEventListener('dragleave', () => {
+            dragArea.classList.remove('dragover');
+        });
+        dragArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                uploadForm.submit();
+            }
+        });
+    </script>
+</body>
+</html> 
